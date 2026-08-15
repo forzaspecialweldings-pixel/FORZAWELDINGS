@@ -3,9 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 
 import { Icon } from "@/view/Icon";
+import { LanguageToggle } from "@/view/LanguageToggle";
 import { businessInfo, navLinks } from "@/model/data";
+import { esOverrides, useLanguage, useLocalizedList } from "@/model/i18n";
 
 export function Header() {
+  const { t } = useLanguage();
+  const links = useLocalizedList(navLinks, esOverrides.navLinks);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeHref, setActiveHref] = useState("#home");
@@ -56,7 +60,7 @@ export function Header() {
     <>
       <header className={scrolled ? "site-header scrolled" : "site-header"} id="site-header">
         <div className="wrap">
-          <a href="#top" className="brand" aria-label="Forza Special Welding LLC — home">
+          <a href="#top" className="brand" aria-label={t.header.brandAria}>
             <BrandMark />
             <span className="brand-word">
               <span className="b1">FORZA</span>
@@ -65,7 +69,7 @@ export function Header() {
           </a>
 
           <nav className="main-nav" aria-label="Primary">
-            {navLinks.map((link) => (
+            {links.map((link) => (
               <a key={link.href} href={link.href} className={activeHref === link.href ? "active" : undefined}>
                 {link.label}
               </a>
@@ -73,14 +77,15 @@ export function Header() {
           </nav>
 
           <div className="header-actions">
+            <LanguageToggle className="lang-switch--desktop" />
             <a href="#contact" className="btn btn-primary">
-              Get a Free Estimate
+              {t.header.estimate}
             </a>
             <button
               className="menu-toggle"
               aria-expanded={menuOpen}
               aria-controls="mobile-nav"
-              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-label={menuOpen ? t.header.closeMenu : t.header.openMenu}
               onClick={() => setMenuOpen((open) => !open)}
             >
               <Icon name="i-menu" className="icon-menu" />
@@ -93,7 +98,7 @@ export function Header() {
       <nav id="mobile-nav" className={menuOpen ? "mobile-nav open" : "mobile-nav"} aria-label="Mobile">
         <div className="wrap">
           <ul>
-            {navLinks.map((link) => (
+            {links.map((link) => (
               <li key={link.href}>
                 <a href={link.href} onClick={() => setMenuOpen(false)}>
                   {link.label}
@@ -101,8 +106,9 @@ export function Header() {
               </li>
             ))}
           </ul>
+          <LanguageToggle className="lang-switch--mobile" />
           <a href="#contact" onClick={() => setMenuOpen(false)} className="btn btn-primary btn-block">
-            Get a Free Estimate
+            {t.header.estimate}
           </a>
           <div className="contact-block">
             <a href={`tel:${businessInfo.phoneHref}`}>{businessInfo.phoneDisplay}</a>

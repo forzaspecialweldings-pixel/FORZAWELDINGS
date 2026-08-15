@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { Icon } from "@/view/Icon";
 import { Reveal } from "@/view/Reveal";
 import { projects } from "@/model/data";
+import { esOverrides, useLanguage, useLocalizedList } from "@/model/i18n";
 
 function AutoplayVideo({ src, poster, alt }: { src: string; poster: string; alt: string }) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -44,10 +45,12 @@ function AutoplayVideo({ src, poster, alt }: { src: string; poster: string; alt:
 }
 
 export function FeaturedWork() {
+  const { t } = useLanguage();
+  const localizedProjects = useLocalizedList(projects, esOverrides.projects);
   const [openSlug, setOpenSlug] = useState<string | null>(null);
   const lastFocused = useRef<HTMLElement | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
-  const openProject = projects.find((p) => p.slug === openSlug) ?? null;
+  const openProject = localizedProjects.find((p) => p.slug === openSlug) ?? null;
 
   function openLightbox(slug: string) {
     lastFocused.current = document.activeElement as HTMLElement | null;
@@ -72,22 +75,22 @@ export function FeaturedWork() {
     return () => document.removeEventListener("keydown", onKeydown);
   }, [openProject]);
 
-  if (projects.length === 0) return null;
+  if (localizedProjects.length === 0) return null;
 
   return (
     <section className="section section--alt" id="projects">
       <div className="wrap">
         <div className="sheet-label">
           <span className="num">04</span> / 12<span className="rule" />
-          Featured Work
+          {t.featuredWork.sheetLabel}
         </div>
         <Reveal as="div" className="section-head">
-          <h2 className="section-title">Featured Work</h2>
-          <p className="section-text">A look at custom fabrication and metalwork created to solve real customer needs.</p>
+          <h2 className="section-title">{t.featuredWork.title}</h2>
+          <p className="section-text">{t.featuredWork.text}</p>
         </Reveal>
 
         <div className="work-layout">
-          {projects.map((project) => (
+          {localizedProjects.map((project) => (
             <Reveal
               as="article"
               className="project-card"
@@ -97,7 +100,7 @@ export function FeaturedWork() {
                 role="button"
                 tabIndex={0}
                 aria-haspopup="dialog"
-                aria-label={`Open project detail: ${project.title}`}
+                aria-label={t.featuredWork.openAria(project.title)}
                 onClick={() => openLightbox(project.slug)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
@@ -108,7 +111,7 @@ export function FeaturedWork() {
                 style={{ display: "contents", cursor: "pointer" }}
               >
                 <div className="project-figure photo">
-                  <span className="tag">Completed Project</span>
+                  <span className="tag">{t.featuredWork.tagCompleted}</span>
                   <img src={project.cover.src} alt={project.cover.alt} loading="lazy" />
                 </div>
                 <div className="project-body">
@@ -116,7 +119,7 @@ export function FeaturedWork() {
                   <h3>{project.title}</h3>
                   <p>{project.description}</p>
                   <span className="expand">
-                    View Project Detail <Icon name="i-arrow" />
+                    {t.featuredWork.viewDetail} <Icon name="i-arrow" />
                   </span>
                 </div>
               </div>
@@ -137,7 +140,7 @@ export function FeaturedWork() {
       >
         {openProject && (
           <div className="lightbox-panel">
-            <button className="lightbox-close" ref={closeButtonRef} onClick={closeLightbox} aria-label="Close project detail">
+            <button className="lightbox-close" ref={closeButtonRef} onClick={closeLightbox} aria-label={t.featuredWork.closeAria}>
               <Icon name="i-close" className="icon-18" />
             </button>
             <div className="lightbox-figure gallery">
@@ -159,7 +162,7 @@ export function FeaturedWork() {
                 onClick={closeLightbox}
                 style={{ alignSelf: "flex-start", marginTop: ".5rem" }}
               >
-                Start a Similar Project
+                {t.featuredWork.startSimilar}
               </a>
             </div>
           </div>

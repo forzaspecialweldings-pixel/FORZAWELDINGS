@@ -1,25 +1,28 @@
+"use client";
+
 import { Icon } from "@/view/Icon";
 import { Reveal } from "@/view/Reveal";
 import { services } from "@/model/data";
+import { esOverrides, useLanguage, useLocalizedList } from "@/model/i18n";
 
 export function Services() {
+  const { t } = useLanguage();
+  const items = useLocalizedList(services, esOverrides.services);
+
   return (
     <section className="section section--alt" id="services">
       <div className="wrap">
         <div className="sheet-label">
           <span className="num">02</span> / 12<span className="rule" />
-          Services
+          {t.services.sheetLabel}
         </div>
         <Reveal as="div" className="section-head">
-          <h2 className="section-title">Our Welding &amp; Fabrication Services</h2>
-          <p className="section-text">
-            From one-of-a-kind custom pieces to structural repairs, we provide dependable metalworking solutions
-            tailored to each project.
-          </p>
+          <h2 className="section-title">{t.services.title}</h2>
+          <p className="section-text">{t.services.text}</p>
         </Reveal>
 
         <div className="services-grid">
-          {services.map((service) => (
+          {items.map((service) => (
             <Reveal as="article" className="service-card" key={service.title}>
               <div className="icon-wrap">
                 <Icon name={service.icon} />

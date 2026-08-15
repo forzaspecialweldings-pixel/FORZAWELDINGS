@@ -21,7 +21,7 @@ export type IconName =
   | "i-shield" | "i-tag" | "i-spark" | "i-flame" | "i-dot-flame" | "i-beam" | "i-plate"
   | "i-ring" | "i-wheel" | "i-truss" | "i-table" | "i-gear" | "i-anchor" | "i-modify"
   | "i-custom" | "i-ruler" | "i-layers" | "i-check-badge" | "i-biz" | "i-hardhat"
-  | "i-crane" | "i-workshop" | "i-briefcase" | "i-home" | "i-factory" | "i-star" | "i-camera";
+  | "i-crane" | "i-workshop" | "i-briefcase" | "i-home" | "i-factory" | "i-star" | "i-camera" | "i-globe";
 
 export interface Service {
   readonly icon: IconName;

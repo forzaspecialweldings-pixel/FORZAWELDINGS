@@ -1,6 +1,8 @@
 import { z } from "zod";
 
 import { PREFERRED_CONTACT_CHOICES, PROJECT_TYPE_CHOICES } from "@/model/data";
+import type { Lang } from "@/model/i18n";
+import { ui } from "@/model/i18n";
 
 export interface ContactFormValues {
   name: string;
@@ -24,23 +26,26 @@ export const initialContactFormValues: ContactFormValues = {
   preferredContact: "Phone Call",
 };
 
-export const contactSchema = z.object({
-  name: z.string().trim().min(1, "Enter your full name."),
-  phone: z
-    .string()
-    .trim()
-    .refine((value) => value.replace(/[^0-9]/g, "").length >= 10, "Enter a valid phone number."),
-  email: z.string().trim().email("Enter a valid email address."),
-  projectType: z.enum(PROJECT_TYPE_CHOICES, {
-    message: "Select a project type.",
-  }),
-  location: z.string().trim().optional().default(""),
-  description: z.string().trim().min(1, "Describe your project."),
-  preferredContact: z.enum(PREFERRED_CONTACT_CHOICES),
-});
+function buildContactSchema(lang: Lang) {
+  const messages = ui[lang].contactForm.errors;
+  return z.object({
+    name: z.string().trim().min(1, messages.name),
+    phone: z
+      .string()
+      .trim()
+      .refine((value) => value.replace(/[^0-9]/g, "").length >= 10, messages.phone),
+    email: z.string().trim().email(messages.email),
+    projectType: z.enum(PROJECT_TYPE_CHOICES, {
+      message: messages.projectType,
+    }),
+    location: z.string().trim().optional().default(""),
+    description: z.string().trim().min(1, messages.description),
+    preferredContact: z.enum(PREFERRED_CONTACT_CHOICES),
+  });
+}
 
-export function validateContactForm(values: ContactFormValues): ContactFormErrors {
-  const parsed = contactSchema.safeParse(values);
+export function validateContactForm(values: ContactFormValues, lang: Lang = "en"): ContactFormErrors {
+  const parsed = buildContactSchema(lang).safeParse(values);
   if (parsed.success) return {};
 
   const errors: ContactFormErrors = {};
@@ -51,15 +56,18 @@ export function validateContactForm(values: ContactFormValues): ContactFormError
   return errors;
 }
 
-export function buildProjectSmsBody(values: ContactFormValues): string {
+export function buildProjectSmsBody(values: ContactFormValues, lang: Lang = "en"): string {
+  const { sms, projectTypes, preferredContactChoices } = ui[lang].contactForm;
+  const projectType = projectTypes[values.projectType] ?? values.projectType;
+  const preferredContact = preferredContactChoices[values.preferredContact] ?? values.preferredContact;
   const lines = [
-    `New project inquiry from ${values.name}`,
-    `Phone: ${values.phone}`,
-    `Email: ${values.email}`,
-    `Type: ${values.projectType}`,
-    values.location ? `Location: ${values.location}` : null,
-    `Preferred contact: ${values.preferredContact}`,
-    `Details: ${values.description}`,
+    `${sms.inquiryFrom} ${values.name}`,
+    `${sms.phone}: ${values.phone}`,
+    `${sms.email}: ${values.email}`,
+    `${sms.type}: ${projectType}`,
+    values.location ? `${sms.location}: ${values.location}` : null,
+    `${sms.preferredContact}: ${preferredContact}`,
+    `${sms.details}: ${values.description}`,
   ].filter((line): line is string => Boolean(line));
 
   return lines.join("\n");

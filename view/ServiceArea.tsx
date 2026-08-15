@@ -1,30 +1,29 @@
+"use client";
+
 import { Reveal } from "@/view/Reveal";
 import { serviceAreaBase, serviceAreaCities } from "@/model/data";
+import { useLanguage } from "@/model/i18n";
 
 export function ServiceArea() {
+  const { t } = useLanguage();
+
   return (
     <section className="section" id="service-area">
       <div className="wrap">
         <div className="sheet-label">
           <span className="num">07</span> / 12<span className="rule" />
-          Service Area
+          {t.serviceArea.sheetLabel}
         </div>
         <div className="area-layout">
           <Reveal as="div" className="area-copy">
-            <h2 className="section-title">Serving Mansfield and the DFW Area</h2>
-            <p className="section-text">
-              Forza Special Welding LLC is based in Mansfield, Texas, and serves customers throughout the
-              Dallas&ndash;Fort Worth area depending on the scope and location of each project.
-            </p>
+            <h2 className="section-title">{t.serviceArea.title}</h2>
+            <p className="section-text">{t.serviceArea.text}</p>
             <div className="area-note">
-              <strong>Note:</strong> Additional DFW-area locations may be available depending on the project.
+              <strong>{t.serviceArea.noteLabel}</strong> {t.serviceArea.noteText}
             </div>
           </Reveal>
           <Reveal as="div" className="map-frame">
-            <svg
-              viewBox="0 0 400 320"
-              aria-label="Diagram of Forza Special Welding service area, centered on Mansfield, Texas with nearby DFW-area cities"
-            >
+            <svg viewBox="0 0 400 320" aria-label={t.serviceArea.svgAria}>
               <defs>
                 <pattern id="dotgrid" width="18" height="18" patternUnits="userSpaceOnUse">
                   <circle cx="1" cy="1" r="1" fill="rgba(255,255,255,.05)" />
@@ -91,7 +90,7 @@ export function ServiceArea() {
                   fontSize="12"
                   fill="var(--text-primary)"
                 >
-                  MANSFIELD
+                  {t.serviceArea.base}
                 </text>
                 <text
                   x={serviceAreaBase.x}
@@ -102,11 +101,11 @@ export function ServiceArea() {
                   letterSpacing="1"
                   fill="var(--accent-secondary)"
                 >
-                  BASE OF OPERATIONS
+                  {t.serviceArea.baseSub}
                 </text>
               </g>
             </svg>
-            <span className="map-disclaimer">Diagram for reference only — not to scale</span>
+            <span className="map-disclaimer">{t.serviceArea.disclaimer}</span>
           </Reveal>
         </div>
       </div>

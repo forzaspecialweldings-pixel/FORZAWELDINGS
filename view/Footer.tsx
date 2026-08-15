@@ -1,7 +1,12 @@
+"use client";
+
 import { Icon } from "@/view/Icon";
 import { businessInfo, navLinks } from "@/model/data";
+import { esOverrides, useLanguage, useLocalizedList } from "@/model/i18n";
 
 export function Footer() {
+  const { t } = useLanguage();
+  const links = useLocalizedList(navLinks, esOverrides.navLinks);
   const year = new Date().getFullYear();
 
   return (
@@ -16,21 +21,21 @@ export function Footer() {
                 <span className="b2">Special Welding</span>
               </span>
             </a>
-            <p>Custom metal fabrication, welding, and repairs built with precision and made to last.</p>
+            <p>{t.footer.tagline}</p>
           </div>
           <div className="footer-col">
-            <h4>Services</h4>
+            <h4>{t.footer.servicesTitle}</h4>
             <ul>
-              <li><a href="#services">Custom Fabrication</a></li>
-              <li><a href="#services">MIG &amp; TIG Welding</a></li>
-              <li><a href="#services">Structural Repair</a></li>
-              <li><a href="#services">Trailer Repairs</a></li>
+              <li><a href="#services">{t.footer.serviceFab}</a></li>
+              <li><a href="#services">{t.footer.serviceWeld}</a></li>
+              <li><a href="#services">{t.footer.serviceStructural}</a></li>
+              <li><a href="#services">{t.footer.serviceTrailer}</a></li>
             </ul>
           </div>
           <div className="footer-col links-hide">
-            <h4>Navigate</h4>
+            <h4>{t.footer.navigateTitle}</h4>
             <ul>
-              {navLinks.map((link) => (
+              {links.map((link) => (
                 <li key={link.href}>
                   <a href={link.href}>{link.label}</a>
                 </li>
@@ -38,7 +43,7 @@ export function Footer() {
             </ul>
           </div>
           <div className="footer-col">
-            <h4>Contact</h4>
+            <h4>{t.footer.contactTitle}</h4>
             <ul>
               <li>
                 <a href={`tel:${businessInfo.phoneHref}`}>{businessInfo.phoneDisplay}</a>
@@ -55,7 +60,7 @@ export function Footer() {
           </div>
         </div>
         <div className="footer-bottom">
-          <span>&copy; {year} Forza Special Welding LLC. All rights reserved.</span>
+          <span>{t.footer.rights(year)}</span>
           <a className="social" href={businessInfo.instagramUrl} target="_blank" rel="noopener">
             <Icon name="i-insta" className="icon-16" />
             {businessInfo.instagramUsername}

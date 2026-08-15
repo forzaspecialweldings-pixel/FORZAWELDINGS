@@ -6,6 +6,7 @@ import { IconSprite } from "@/view/IconSprite";
 import { Header } from "@/view/Header";
 import { Footer } from "@/view/Footer";
 import { FloatingActions } from "@/view/FloatingActions";
+import { LanguageProvider } from "@/model/i18n";
 
 export const metadata: Metadata = {
   title: "Forza Special Welding LLC | Metal Fabrication & Welding in Mansfield, TX",
@@ -48,10 +49,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
         />
         <IconSprite />
-        <Header />
-        <main id="top">{children}</main>
-        <Footer />
-        <FloatingActions />
+        <LanguageProvider>
+          <Header />
+          <main id="top">{children}</main>
+          <Footer />
+          <FloatingActions />
+        </LanguageProvider>
       </body>
     </html>
   );

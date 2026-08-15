@@ -1,7 +1,12 @@
+"use client";
+
 import { Icon } from "@/view/Icon";
 import { SparkCanvas } from "@/view/SparkCanvas";
+import { useLanguage } from "@/model/i18n";
 
 export function Hero() {
+  const { t } = useLanguage();
+
   return (
     <section className="hero" id="home">
       <div className="hero-grid" aria-hidden="true" />
@@ -11,40 +16,37 @@ export function Hero() {
       <div className="wrap">
         <p className="hero-eyebrow">
           <span className="dot" />
-          Mansfield, TX &mdash; Dallas&ndash;Fort Worth Area
+          {t.hero.eyebrow}
         </p>
         <h1>
-          Built with Precision. <em>Made to Last.</em>
+          {t.hero.titleLine1} <em>{t.hero.titleEm}</em>
         </h1>
-        <p className="hero-desc">
-          Custom metal fabrication, professional welding, and reliable repairs for residential, commercial, and
-          industrial projects across the Dallas&ndash;Fort Worth area.
-        </p>
+        <p className="hero-desc">{t.hero.desc}</p>
         <div className="hero-actions">
           <a href="#contact" className="btn btn-primary">
-            Request a Free Estimate
+            {t.hero.ctaPrimary}
           </a>
           <a href="#projects" className="btn btn-ghost">
-            View Our Work
+            {t.hero.ctaGhost}
           </a>
         </div>
         <div className="hero-indicators">
           <div className="hero-indicator">
             <Icon name="i-shield" />
-            Fully Insured
+            {t.hero.indicatorInsured}
           </div>
           <div className="hero-indicator">
             <Icon name="i-tag" />
-            Free Estimates
+            {t.hero.indicatorEstimates}
           </div>
           <div className="hero-indicator">
             <Icon name="i-spark" />
-            Custom Fabrication
+            {t.hero.indicatorFab}
           </div>
         </div>
       </div>
       <div className="scroll-cue">
-        <span>Scroll</span>
+        <span>{t.hero.scroll}</span>
         <span className="line" />
       </div>
     </section>

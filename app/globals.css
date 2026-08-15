@@ -184,6 +184,39 @@ svg{display:block;}
 .header-actions{display:flex;align-items:center;gap:1rem;}
 .header-actions .btn-primary{padding:.75rem 1.3rem;font-size:.8rem;}
 
+/* ---------- language switch ---------- */
+.lang-switch{
+  display:inline-flex;align-items:center;gap:.2rem;
+  padding:.28rem;
+  border:1px solid var(--border-default);
+  border-radius:999px;
+  background:rgba(255,255,255,.03);
+  flex:0 0 auto;
+}
+.lang-switch-icon{width:16px;height:16px;margin:0 .3rem 0 .4rem;color:var(--text-muted);flex:0 0 auto;}
+.lang-switch button{
+  font-family:var(--font-display);
+  font-size:.72rem;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  padding:.5rem 1rem;
+  border-radius:999px;
+  color:var(--text-secondary);
+  transition:color .2s var(--ease), background-color .2s var(--ease), box-shadow .2s var(--ease);
+}
+.lang-switch button:hover{color:var(--text-primary);}
+.lang-switch button.active{
+  color:#0A0603;
+  font-weight:600;
+  background:linear-gradient(180deg, var(--accent-secondary), var(--accent-primary));
+  box-shadow:0 1px 0 rgba(255,255,255,.25) inset, 0 6px 16px -8px rgba(197,102,32,.65);
+}
+.lang-switch--mobile{align-self:flex-start;}
+.lang-switch--mobile button{font-size:.85rem;padding:.65rem 1.25rem;}
+@media (max-width:920px){
+  .lang-switch--desktop{display:none;}
+}
+
 .menu-toggle{
   display:none;width:44px;height:44px;flex:0 0 auto;
   align-items:center;justify-content:center;

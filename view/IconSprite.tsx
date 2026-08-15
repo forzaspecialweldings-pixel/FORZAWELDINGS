@@ -36,6 +36,7 @@ export function IconSprite() {
         <symbol id="i-factory" viewBox="0 0 24 24"><path d="M4 20V12l4 3v-3l4 3v-3l4 3V6h2v14z" /></symbol>
         <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5 14.4 9l6 .6-4.5 3.9 1.4 5.9L12 16.3 6.7 19.4l1.4-5.9L3.6 9.6l6-.6z" /></symbol>
         <symbol id="i-camera" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="1" /><path d="M8 7 9.5 4.5h5L16 7" /><circle cx="12" cy="13.5" r="3.6" /></symbol>
+        <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" /><ellipse cx="12" cy="12" rx="3.6" ry="8.5" /><line x1="3.5" y1="12" x2="20.5" y2="12" /><path d="M5 7.2h14M5 16.8h14" /></symbol>
       </defs>
     </svg>
   );

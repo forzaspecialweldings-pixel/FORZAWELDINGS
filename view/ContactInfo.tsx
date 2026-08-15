@@ -1,7 +1,12 @@
+"use client";
+
 import { Icon } from "@/view/Icon";
 import { businessInfo } from "@/model/data";
+import { useLanguage } from "@/model/i18n";
 
 export function ContactInfo() {
+  const { t } = useLanguage();
+
   return (
     <div className="contact-info">
       <dl>
@@ -10,7 +15,7 @@ export function ContactInfo() {
             <Icon name="i-phone" />
           </div>
           <div>
-            <dt>Contact</dt>
+            <dt>{t.contactInfo.contact}</dt>
             <dd>{businessInfo.contactName}</dd>
           </div>
         </div>
@@ -19,7 +24,7 @@ export function ContactInfo() {
             <Icon name="i-phone" />
           </div>
           <div>
-            <dt>Phone</dt>
+            <dt>{t.contactInfo.phone}</dt>
             <dd>
               <a href={`tel:${businessInfo.phoneHref}`}>{businessInfo.phoneDisplay}</a>
             </dd>
@@ -30,7 +35,7 @@ export function ContactInfo() {
             <Icon name="i-pin" />
           </div>
           <div>
-            <dt>Address</dt>
+            <dt>{t.contactInfo.address}</dt>
             <dd>{businessInfo.address}</dd>
           </div>
         </div>
@@ -39,7 +44,7 @@ export function ContactInfo() {
             <Icon name="i-insta" />
           </div>
           <div>
-            <dt>Instagram</dt>
+            <dt>{t.contactInfo.instagram}</dt>
             <dd>
               <a href={businessInfo.instagramUrl} target="_blank" rel="noopener">
                 {businessInfo.instagramUsername}
@@ -49,15 +54,15 @@ export function ContactInfo() {
         </div>
       </dl>
       <div className="quick-alt">
-        <p>Prefer not to fill out a form? Reach us directly:</p>
+        <p>{t.contactInfo.altPrompt}</p>
         <div className="row-btns">
           <a href={`tel:${businessInfo.phoneHref}`} className="btn btn-ghost">
             <Icon name="i-phone" />
-            Call Now
+            {t.contactInfo.callNow}
           </a>
           <a href={`sms:${businessInfo.phoneHref}`} className="btn btn-ghost">
             <Icon name="i-sms" />
-            Text Now
+            {t.contactInfo.textNow}
           </a>
           <a href={businessInfo.instagramUrl} target="_blank" rel="noopener" className="btn btn-ghost">
             <Icon name="i-insta" />
