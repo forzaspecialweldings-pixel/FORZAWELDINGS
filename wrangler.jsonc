@@ -1,6 +1,7 @@
 {
   "name": "forza",
   "compatibility_date": "2026-07-30",
+  "account_id": "500fc909b9eadd62c68deeb20cdb96e4",
   "assets": {
     "directory": "./out"
   }
